@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Topics</title>
+</head>
+<body>
+<h1>Topics</h1>
+
+<ul>
+    {% for topic in topics %}
+        <li>{{ topic.title }}</li>
+    {% empty %}
+        <li>No topics</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
