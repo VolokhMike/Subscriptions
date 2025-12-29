@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Topics</title>
-</head>
-<body>
 <h1>Topics</h1>
 
-<ul>
-    {% for topic in topics %}
-        <li>{{ topic.title }}</li>
-    {% empty %}
-        <li>No topics</li>
-    {% endfor %}
-</ul>
+{% for topic in topics %}
+    <p>
+        {{ topic.name }} |
+        Subscribers: {{ topic.subscribers.count }}
 
-</body>
-</html>
+        {% if user in topic.subscribers.all %}
+            <form method="post" action="/topics/unsubscribe/{{ topic.id }}/">
+                {% csrf_token %}
+                <button>Unsubscribe</button>
+            </form>
+        {% else %}
+            <form method="post" action="/topics/subscribe/{{ topic.id }}/">
+                {% csrf_token %}
+                <button>Subscribe</button>
+            </form>
+        {% endif %}
+
+        <form method="post" action="/topics/delete/{{ topic.id }}/">
+            {% csrf_token %}
+            <button>Delete</button>
+        </form>
+    </p>
+{% endfor %}
